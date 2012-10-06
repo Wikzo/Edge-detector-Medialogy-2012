@@ -8,46 +8,28 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage);
 Mat ThresholdBlackWhiteImage(Mat blackWhiteImage);
 Mat EdgeDetecting(Mat inputImage);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> experiment
 int main()
 {
 	Mat colorImage;
-	Mat gray;
 
 	// Use image
-    /*colorImage = imread("chrome.jpg");
+    colorImage = imread("chrome.jpg");
     if (colorImage.empty()) 
     {
         cout << "Cannot load image!" << endl;
         return -1;
-    }*/
+    }
 
-
-	// Use camera instead of picture
-	// -----------------------------------------------------
-	VideoCapture capture;
-	capture.open(0);
-	//capture.set(CV_CAP_PROP_FPS, 15);
-
-	while (true)
-	{
-		capture >> colorImage;
-		if (colorImage.empty())
-			break;
-
-		gray = ConvertColorImageToBlackWhite(colorImage);
-		
-		imshow("videoColor", colorImage);
-		imshow("videoGray", gray);
-
-		if ((char)waitKey(1) == 'q')
-			break;
-	}
 
 	// -----------------------------------------------------
 
 	// Convert to black-white
-	//Mat gray = ConvertColorImageToBlackWhite(colorImage);
-	//cv::imwrite("chrome_grayscale.jpg", gray);
+	Mat gray = ConvertColorImageToBlackWhite(colorImage);
+	cv::imwrite("chrome_grayscale.jpg", gray);
 
 	// Threshold
 	//Mat threshold = ThresholdBlackWhiteImage(gray);
@@ -58,8 +40,8 @@ int main()
 	// Edge detecting (OpenCV)
 	//cv::Canny(gray, edge, 100, 250);
 
-    //cv::imshow("Color image", colorImage);
-	//cv::imshow("Grayscale image", gray);
+    cv::imshow("Color image", colorImage);
+	cv::imshow("Grayscale image", gray);
 	//cv::imshow("Binary image", threshold);
 	//cv::imshow("Edge", edge);
 
