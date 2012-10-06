@@ -20,6 +20,15 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage)
 				+ colorImage.at<cv::Vec3b>(y, x)[1] * GreenWeight
 				+ colorImage.at<cv::Vec3b>(y, x)[2] * RedWeight;
 
+			// Use Vec3b for images with 3 channels
+			// color.Image.channels() = 3
+
+			// colorImage.at<cv::Vec3b>(y, x)[0] = blue
+			// colorImage.at<cv::Vec3b>(y, x)[1] = green
+			// colorImage.at<cv::Vec3b>(y, x)[2] = red
+
+			// Use uchar for grayscale images (1 channel)
+
 			grayScaleImage.at<uchar>(y, x) = grayValue;	
 
 		}
