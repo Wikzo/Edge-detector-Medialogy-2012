@@ -8,6 +8,9 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage);
 Mat ThresholdBlackWhiteImage(Mat blackWhiteImage);
 Mat EdgeDetecting(Mat inputImage);
 
+// THIS IS MASTER
+// YASYDASYDASD
+
 int main()
 {
 	Mat colorImage;
