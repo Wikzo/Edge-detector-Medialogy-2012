@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 add in local
 =======
 add in web
@@ -12,3 +13,6 @@ add remote
 >>>>>>> origin/master
 
 LOCAL
+=======
+WEB
+>>>>>>> 774c0091d2ea4945fe00c719989091c6aa2b685a
