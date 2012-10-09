@@ -181,7 +181,9 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
-				edge.at<uchar>(y, x) = (
+
+				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
 					+ (input.at<uchar>(y, x-1)) * -1
 					+ (input.at<uchar>(y+1, x-1)) * 0
@@ -192,6 +194,16 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y, x+1)) * 1
 					+ (input.at<uchar>(y+1, x+1)) * 2
 					);
+
+
+				// Map values from 0 to 255
+				if (temp < 0)
+					temp = 0;
+				else if (temp > 255)
+					temp = 255;
+				
+
+				edge.at<uchar>(y, x) = temp;
 			}
 		}
 	}
@@ -204,7 +216,8 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
-				edge.at<uchar>(y, x) = (
+				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
 					+ (input.at<uchar>(y, x-1)) * -1
 					+ (input.at<uchar>(y+1, x-1)) * 0
@@ -215,6 +228,15 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y, x+1)) * 1
 					+ (input.at<uchar>(y+1, x+1)) * 2
 					);
+
+				// Map values from 0 to 255
+				if (temp < 0)
+					temp = 0;
+				else if (temp > 255)
+					temp = 255;
+				
+
+				edge.at<uchar>(y, x) = temp;
 			}
 		}
 	}
@@ -228,7 +250,8 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
-				edge.at<uchar>(y, x) = (
+				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -1
 					+ (input.at<uchar>(y, x-1)) * -2
 					+ (input.at<uchar>(y+1, x-1)) * -1
@@ -239,6 +262,15 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y, x+1)) * 2
 					+ (input.at<uchar>(y+1, x+1)) * 1
 					);
+
+				// Map values from 0 to 255
+				if (temp < 0)
+					temp = 0;
+				else if (temp > 255)
+					temp = 255;
+				
+
+				edge.at<uchar>(y, x) = temp;
 			}
 		}
 	}
@@ -252,7 +284,8 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
-				edge.at<uchar>(y, x) = (
+				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -1
 					+ (input.at<uchar>(y, x-1)) * 0
 					+ (input.at<uchar>(y+1, x-1)) * 1
@@ -263,6 +296,15 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y, x+1)) * 0
 					+ (input.at<uchar>(y+1, x+1)) * 1
 					);
+
+				// Map values from 0 to 255
+				if (temp < 0)
+					temp = 0;
+				else if (temp > 255)
+					temp = 255;
+				
+
+				edge.at<uchar>(y, x) = temp;
 			}
 		}
 	}
@@ -278,7 +320,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 	}
 
 	// Threshold
-	edge = ThresholdBlackWhiteImage(edge, threshold);
+	edge = ThresholdBlackWhiteImage(edge, 30);
 	return edge;
 }
 
