@@ -1,0 +1,17 @@
+\chapter{Theory about edge Detection}
+\section{Edge definition}
+An edge in an image is basically a place in an image where there is a contrast between two points.
+
+\citet{visual_story} describes an edge as the apparent line around the borders of a two-dimensional object.
+
+Another definition is given by \citep{ip_book} who writes that an edge in an image is defined as a position where there is a significant change in gray-level values.
+
+\section{Edge detection}
+An edge in a gray scale image occurs when there is a transition in gray level over an 
+amount of pixels. A perfect edge would be a transition from black to white over one pixel 
+as shown on figure 1. In many images, edges like these wont occur (unless it’s a binary 
+image). The transition will be blurred spreading the transition over more pixels, resulting 
+in a slope-like profile of the gray level transition seen on figure 2. Here the edge is spread 
+over more pixels and will show as a wider edge instead of the 1-pixel transition that 
+shows as a 1-pixel edge. We might say the thickness of the edge is defined by the length 
+of the ramp that in the gray level profile.\fxnote{DETTE SKAL SKRIVES SELV!!}
