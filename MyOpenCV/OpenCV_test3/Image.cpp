@@ -28,7 +28,7 @@ int main()
 {
 	cout << "Edge detection using the Sobel kernel (and OpenCV to load images)" << endl;
 	cout << "By Gustav Dahl - Medialogy 3rd semester 2012 - Aalborg University\n\n";
-	// Load the image image
+	// Load the image
     Mat colorImage = imread("building.jpg");
     if (colorImage.empty()) 
     {
@@ -160,7 +160,7 @@ Mat ThresholdBlackWhiteImage(Mat blackWhiteImage, int threshold)
 	{
 		for (int x = 0; x < image.cols; x++)
 		{
-			if (image.at<uchar>(y, x) <= threshold)
+			if (image.at<uchar>(y, x) >= threshold)
 				image.at<uchar>(y, x) = 255;
 			else
 				image.at<uchar>(y, x) = 0;
