@@ -38,6 +38,8 @@ int main()
 
 	//sadasdasdasdsd
 
+	//sadasdasdasd
+
 	cout << "Processing image. Please wait..." << endl;
 
 	// Convert to black-white
