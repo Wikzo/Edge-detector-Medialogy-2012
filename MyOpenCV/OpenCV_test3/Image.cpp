@@ -36,7 +36,7 @@ int main()
         return -1;
     }
 
-	// Here is something cool
+	//sadasdasdasdsd
 
 	cout << "Processing image. Please wait..." << endl;
 
