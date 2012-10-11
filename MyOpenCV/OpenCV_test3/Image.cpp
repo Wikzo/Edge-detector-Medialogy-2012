@@ -36,12 +36,6 @@ int main()
         return -1;
     }
 
-	// experiment
-
-	//asdasdasdasdasd
-
-	//sadasdasdasd
-
 	cout << "Processing image. Please wait..." << endl;
 
 	// Convert to black-white
