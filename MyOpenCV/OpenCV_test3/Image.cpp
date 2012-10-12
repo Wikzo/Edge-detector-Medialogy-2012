@@ -13,7 +13,7 @@ enum SobelDirection
 };
 
 const int THRESHOLD_GRAYSCALE = 133; // optimal value was found using ImageJ
-const int THRESHOLD_SOBEL = 30; // found by experimenting
+const int THRESHOLD_SOBEL = 100; // found by experimenting
 
 Mat ConvertColorImageToBlackWhite(Mat colorImage);
 Mat MeanFilter(Mat input);
@@ -52,7 +52,12 @@ int main()
 
 	// Edge detecting
 	Mat edge_diagonal_right = SobelEdgeDetecting(gray, Diagonal_Right, true, THRESHOLD_SOBEL);
+
+
+
 	Mat edge_diagonal_left = SobelEdgeDetecting(gray, Diagonal_Left, true, THRESHOLD_SOBEL);
+
+
 	Mat edge_vertical = SobelEdgeDetecting(gray, Vertical, true, THRESHOLD_SOBEL);
 	Mat edge_horizontal = SobelEdgeDetecting(gray, Horizontal, true, THRESHOLD_SOBEL);
 
@@ -201,11 +206,14 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y+1, x+1)) * 2
 					);
 
+				// Absolute value
+				if (temp < 0)
+					temp *= -1;
 
 				// Map values from 0 to 255
-				if (temp < 0)
+				if (temp <= threshold)
 					temp = 0;
-				else if (temp > 255)
+				else
 					temp = 255;
 				
 
@@ -235,10 +243,14 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y+1, x+1)) * 2
 					);
 
-				// Map values from 0 to 255
+				// Absolute value
 				if (temp < 0)
+					temp *= -1;
+
+				// Map values from 0 to 255
+				if (temp <= threshold)
 					temp = 0;
-				else if (temp > 255)
+				else
 					temp = 255;
 				
 
@@ -269,10 +281,14 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y+1, x+1)) * 1
 					);
 
-				// Map values from 0 to 255
+				// Absolute value
 				if (temp < 0)
+					temp *= -1;
+
+				// Map values from 0 to 255
+				if (temp <= threshold)
 					temp = 0;
-				else if (temp > 255)
+				else
 					temp = 255;
 				
 
@@ -303,10 +319,14 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					+ (input.at<uchar>(y+1, x+1)) * 1
 					);
 
-				// Map values from 0 to 255
+				// Absolute value
 				if (temp < 0)
+					temp *= -1;
+
+				// Map values from 0 to 255
+				if (temp <= threshold)
 					temp = 0;
-				else if (temp > 255)
+				else
 					temp = 255;
 				
 
