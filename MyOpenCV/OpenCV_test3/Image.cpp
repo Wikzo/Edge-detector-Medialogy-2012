@@ -52,33 +52,28 @@ int main()
 
 	// Edge detecting
 	Mat edge_diagonal_right = SobelEdgeDetecting(gray, Diagonal_Right, true, THRESHOLD_SOBEL);
-
-
-
-	Mat edge_diagonal_left = SobelEdgeDetecting(gray, Diagonal_Left, true, THRESHOLD_SOBEL);
-
-
+	//Mat edge_diagonal_left = SobelEdgeDetecting(gray, Diagonal_Left, true, THRESHOLD_SOBEL);
 	Mat edge_vertical = SobelEdgeDetecting(gray, Vertical, true, THRESHOLD_SOBEL);
 	Mat edge_horizontal = SobelEdgeDetecting(gray, Horizontal, true, THRESHOLD_SOBEL);
 
 	Mat verti_plus_horiz = AddTwoMatsTogether(edge_vertical, edge_horizontal);
-	Mat diagonal_right_plus_left = AddTwoMatsTogether(edge_diagonal_right, edge_diagonal_left);
-	Mat diagonal_plus_vertical_horizontal = AddTwoMatsTogether(verti_plus_horiz, diagonal_right_plus_left);
+	//Mat diagonal_right_plus_left = AddTwoMatsTogether(edge_diagonal_right, edge_diagonal_left);
+	Mat diagonal_plus_vertical_horizontal = AddTwoMatsTogether(verti_plus_horiz, edge_diagonal_right);
 
 	imwrite("diagonal_right.jpg", edge_diagonal_right);
 	imwrite("edge_diagonal_left.jpg", edge_diagonal_right);
 	imwrite("edge_vertical.jpg", edge_vertical);
 	imwrite("edge_horizontal.jpg", edge_horizontal);
 	imwrite("verti_plus_horiz.jpg", verti_plus_horiz);
-	imwrite("diagonal_right_plus_left.jpg", diagonal_right_plus_left);
+	//imwrite("diagonal_right_plus_left.jpg", diagonal_right_plus_left);
 	imwrite("diagonal_plus_vertical_horizontal.jpg", diagonal_plus_vertical_horizontal);
 
-    cv::imshow("Original image", colorImage);
+    //cv::imshow("Original image", colorImage);
 	cv::imshow("Grayscale image", gray);
-	cv::imshow("Mean filter", mean);
-	cv::imshow("Binary image", threshold);
+	//cv::imshow("Mean filter", mean);
+	//cv::imshow("Binary image", threshold);
 	cv::imshow("Edge diagonal right", edge_diagonal_right);
-	cv::imshow("Edge diagonal left", edge_diagonal_left);
+	//cv::imshow("Edge diagonal left", edge_diagonal_left);
 	cv::imshow("Edge vertical", edge_vertical);
 	cv::imshow("Edge horizontal", edge_horizontal);
 	cv::imshow("Diagonal plus vertical and horizontal", diagonal_plus_vertical_horizontal);
