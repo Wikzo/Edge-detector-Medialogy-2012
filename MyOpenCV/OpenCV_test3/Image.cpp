@@ -20,73 +20,91 @@ Mat MeanFilter(Mat input);
 Mat ThresholdBlackWhiteImage(Mat blackWhiteImage, int threshold);
 Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFilterBeforeDoingEdgeDetecting, int threshold);
 Mat AddTwoMatsTogether(Mat matA, Mat matB);
-void SortValues(uchar* a, int size);
+Mat Erosion(Mat input, int radius);
 
 
 
 int main()
 {
+	// Program description
 	cout << "Edge detection using the Sobel kernel (and OpenCV to load images)" << endl;
 	cout << "By Gustav Dahl - Medialogy 3rd semester 2012 - Aalborg University\n\n";
-	// Load the image
-    Mat colorImage = imread("building.jpg");
-    if (colorImage.empty()) 
+	
+	// Load the original color image
+    Mat colorImage = imread("0_building.jpg");
+    
+	if (colorImage.empty()) 
     {
         cout << "Cannot load image!" << endl;
         return -1;
     }
-
+	
+	// "Loading" screen
 	cout << "Processing image. Please wait..." << endl;
 
-	// Convert to black-white
+
+	// - - - - - - - - - APPLY IMAGE PROCESSING - - - - - - - - - 
+	// Convert color image to grayscale
 	Mat gray = ConvertColorImageToBlackWhite(colorImage);
-	cv::imwrite("grayscale.jpg", gray);
-
-	// Mean (black and white only)
+	
+	// Mean filter applied(black and white only)
 	Mat mean = MeanFilter(gray);
-	imwrite("mean.jpg", mean);
 
-	// Threshold
+	// Grayscale threshold
 	Mat threshold = ThresholdBlackWhiteImage(gray, THRESHOLD_GRAYSCALE);
-	imwrite("threshold.jpg", threshold);
 
-	// Edge detecting
+	// Erosion
+	Mat erosion = Erosion(threshold, 1);
+
+	// Finding outline using the eroded image, by subtracting the original grayscale from the eroded image
+	Mat erosionOutline = threshold - erosion;
+
+	// Edge detecting using the Sobel kernel
 	Mat edge_diagonal_right = SobelEdgeDetecting(gray, Diagonal_Right, true, THRESHOLD_SOBEL);
-	//Mat edge_diagonal_left = SobelEdgeDetecting(gray, Diagonal_Left, true, THRESHOLD_SOBEL);
+	Mat edge_diagonal_left = SobelEdgeDetecting(gray, Diagonal_Left, true, THRESHOLD_SOBEL);
 	Mat edge_vertical = SobelEdgeDetecting(gray, Vertical, true, THRESHOLD_SOBEL);
 	Mat edge_horizontal = SobelEdgeDetecting(gray, Horizontal, true, THRESHOLD_SOBEL);
 
-	Mat verti_plus_horiz = AddTwoMatsTogether(edge_vertical, edge_horizontal);
-	//Mat diagonal_right_plus_left = AddTwoMatsTogether(edge_diagonal_right, edge_diagonal_left);
-	Mat diagonal_plus_vertical_horizontal = AddTwoMatsTogether(verti_plus_horiz, edge_diagonal_right);
+	// Combine the different kernels
+	Mat vertical_plus_horizontal = AddTwoMatsTogether(edge_vertical, edge_horizontal);
+	Mat diagonal_right_plus_left = AddTwoMatsTogether(edge_diagonal_right, edge_diagonal_left);
+	Mat diagonal_plus_vertical_horizontal = AddTwoMatsTogether(vertical_plus_horizontal, edge_diagonal_right);
 
-	imwrite("diagonal_right.jpg", edge_diagonal_right);
-	imwrite("edge_diagonal_left.jpg", edge_diagonal_right);
-	imwrite("edge_vertical.jpg", edge_vertical);
-	imwrite("edge_horizontal.jpg", edge_horizontal);
-	imwrite("verti_plus_horiz.jpg", verti_plus_horiz);
-	//imwrite("diagonal_right_plus_left.jpg", diagonal_right_plus_left);
-	imwrite("diagonal_plus_vertical_horizontal.jpg", diagonal_plus_vertical_horizontal);
+	// - - - - - - - - - - - - - - - - - - 
 
-    //cv::imshow("Original image", colorImage);
-	cv::imshow("Grayscale image", gray);
-	//cv::imshow("Mean filter", mean);
-	//cv::imshow("Binary image", threshold);
-	cv::imshow("Edge diagonal right", edge_diagonal_right);
-	//cv::imshow("Edge diagonal left", edge_diagonal_left);
-	cv::imshow("Edge vertical", edge_vertical);
-	cv::imshow("Edge horizontal", edge_horizontal);
-	cv::imshow("Diagonal plus vertical and horizontal", diagonal_plus_vertical_horizontal);
+	// Save the images
+	imwrite("1_grayscale.jpg", gray);
+	imwrite("2_meanFilter.jpg", mean);
+	imwrite("3_threshold.jpg", threshold);
+	imwrite("4_erosion.jpg", erosion);
+	imwrite("5_erosionOutline.jpg", erosionOutline);
+	imwrite("6_edge_diagonal_right.jpg", edge_diagonal_right);
+	imwrite("7_edge_diagonal_left.jpg", edge_diagonal_left);
+	imwrite("8_edge_vertical.jpg", edge_vertical);
+	imwrite("9_edge_horizontal.jpg", edge_horizontal);
+	imwrite("10_vertical_plus_horizontal.jpg", vertical_plus_horizontal);
+	imwrite("11_diagonal_right_plus_left.jpg", diagonal_right_plus_left);
+	imwrite("12_diagonal_plus_vertical_horizontal.jpg", diagonal_plus_vertical_horizontal);
 
+	// Show the images
+	imshow("original color image", colorImage);
+    imshow("grayscale", gray);
+	imshow("meanFilter", mean);
+	imshow("threshold", threshold);
+	imshow("erosion", erosion);
+	imshow("erosionOutline", erosionOutline);
+	imshow("edge_diagonal_right", edge_diagonal_right);
+	imshow("edge_diagonal_left", edge_diagonal_left);
+	imshow("edge_vertical", edge_vertical);
+	imshow("edge_horizontal", edge_horizontal);
+	imshow("vertical_plus_horizontal", vertical_plus_horizontal);
+	imshow("diagonal_right_plus_left", diagonal_right_plus_left);
+	imshow("diagonal_plus_vertical_horizontal", diagonal_plus_vertical_horizontal);
     waitKey(0);
 }
 
 Mat ConvertColorImageToBlackWhite(Mat colorImage)
 {
-	// Mat(rows, columns, type)
-	// rows = y = 300
-	// cols = x = 600
-
 	Mat grayScaleImage(colorImage.rows, colorImage.cols, CV_8UC1); // new image with only 1 channel
 
 	// Formula for converting from color to grayscale (3.3, p. 30 in Introduction to Video and Image Processing book)
@@ -96,7 +114,6 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage)
 	float RedWeight = 0.299;
 	float GreenWeight = 0.587;
 	float BlueWeight = 0.114;
-	
 
 	// Iterate through all the pixels and apply the formula for grayscale
 	for (int y = 0; y < colorImage.rows; y++) // rows
@@ -104,7 +121,7 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage)
 		for (int x = 0; x < colorImage.cols; x++)
 		{
 			// Calculate grayscale value
-			int grayValue = colorImage.at<cv::Vec3b>(y, x)[0] * BlueWeight
+			float grayValue = colorImage.at<cv::Vec3b>(y, x)[0] * BlueWeight
 				+ colorImage.at<cv::Vec3b>(y, x)[1] * GreenWeight
 				+ colorImage.at<cv::Vec3b>(y, x)[2] * RedWeight;
 
@@ -333,11 +350,6 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 	{
 		// Error text
 		putText(edge, "ERROR - Sobel type not defined!", Point(10, 50), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 255), 4, 8, false);
-		putText(edge, "ERROR - Sobel type not defined!", Point(10, 150), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 255), 4, 8, false);
-		putText(edge, "ERROR - Sobel type not defined!", Point(10, 250), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 255), 4, 8, false);
-		putText(edge, "ERROR - Sobel type not defined!", Point(10, 300), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 0), 4, 8, false);
-		putText(edge, "ERROR - Sobel type not defined!", Point(10, 450), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 0), 4, 8, false);
-		putText(edge, "ERROR - Sobel type not defined!", Point(10, 600), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 0), 4, 8, false);
 	}
 
 	// Threshold
@@ -362,64 +374,32 @@ Mat AddTwoMatsTogether(Mat matA, Mat matB) // should be same size!
 	return output;
 }
 
-// Not working yet
-/*void MedianFilter(Mat input, int kernelSize)
+// Uses a grayscale image
+Mat Erosion(Mat input, int radius)
 {
-	if (kernelSize % 2 == 0) // don't use even numbers
-		kernelSize++;
+	Mat output = input.clone();
 
-	int radius = kernelSize / 2; // e.g. kernel is 7X7 --> radius is 3
-
-	uchar neighborPixels[9];
-
-	for (int y = radius; radius < (input.rows - radius); y++)
+	for(int x = radius; x < input.cols-radius; x++)
 	{
-		int counter = 0;
-		for (int x = radius; x < (input.cols - radius); x++)
+		for(int y = radius; y < input.rows-radius; y++)
 		{
-			// Done
-			if (counter >= 9)
+			bool pixelIsaccepted = true;
+			for(int filterX = x - radius; pixelIsaccepted && filterX <= x + radius; filterX++)
 			{
-				//start sort
-				// put pixels back in
+				for(int filterY = y - radius; pixelIsaccepted && filterY <= y + radius; filterY++)
+				{
+					if (input.at<uchar>(filterY,filterX) == 0)
+					{
+						pixelIsaccepted = false;
+					}
+				}
 			}
-			neighborPixels[x*y] = input.at<uchar>(y, x);
-			counter++;
-		}
-	}
-}*/
-
-// Not working yet
-/*uchar* SortValues(uchar* a, int size)
-{
-	cout << "Before the bubblesort:" << endl;
-	for (int i = 0; i < size; i++)
-		cout << a[i] << endl;
-
-	// Bubble list
-	bool swapped = true;
-
-	while (swapped)
-	{
-		swapped = false;
-		for (int i = 1; i < size; i++)
-		{
-			if (a[i-1] > a[i])
-			{
-				// Sort numbers
-				int temp = a[i-1];
-				a[i-1] = a[i];
-                a[i] = temp;
-
-                swapped = true;
-			}
+			if (pixelIsaccepted == true)
+				output.at<uchar>(y,x) = 255;
+			else
+				output.at<uchar>(y,x) = 0;
 		}
 	}
 
-	cout << "After the bubblesort:" << endl;
-	for (int i = 0; i < size; i++)
-		cout << a[i] << endl;
-
-	uchar* aPointer = a;
-	//return aPointer;
-}*/
+	return output;
+}

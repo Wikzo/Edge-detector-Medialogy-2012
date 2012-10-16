@@ -1,4 +1,4 @@
-\chapter{Theory about edge Detection}
+\chapter{Theory about Edge Detection}
 \section{Edge definition}
 An edge in an image is basically a place in an image where there is a contrast between two points.
 
@@ -6,12 +6,39 @@ An edge in an image is basically a place in an image where there is a contrast b
 
 Another definition is given by \citep{ip_book} who writes that an edge in an image is defined as a position where there is a significant change in gray-level values.
 
-\section{Edge detection}
-An edge in a gray scale image occurs when there is a transition in gray level over an 
-amount of pixels. A perfect edge would be a transition from black to white over one pixel 
-as shown on figure 1. In many images, edges like these wont occur (unless it’s a binary 
-image). The transition will be blurred spreading the transition over more pixels, resulting 
-in a slope-like profile of the gray level transition seen on figure 2. Here the edge is spread 
-over more pixels and will show as a wider edge instead of the 1-pixel transition that 
-shows as a 1-pixel edge. We might say the thickness of the edge is defined by the length 
-of the ramp that in the gray level profile.\fxnote{DETTE SKAL SKRIVES SELV!!}
+In other words, \textbf{an edge in an image is where the intensity changes dramatically.} A perfect edge would have to be a transition from e.g. black to white over just one pixel, but in the real world this rarely happen, unless it is a binary image where there are only black and white pixels.
+
+\section{The usefulness of edges}
+Edges are typically used to define the boundary of an object. This reduces a lot of calculations needed to be done, either by the human brain or a computer,, since it is only necessary to look at the outline and not the whole object. It allows for higher levels of abstraction. This system is used in the way a human perceives the world, using ganglion cell signal changes \citep{perception} \fxnote{bedre skrive + Perception bog}. In machine vision this system is applied, e.g. if a robot needs to recognize and work with a specific object.
+
+\section{The concept of edge detection}
+Edges can be described as the slope of blabla bla as shown on pictures \ref{building_gray} and \ref{surface_plot}.
+
+\begin{figure}[htbp]\centering
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/1_grayscale} %Venstre billede
+	\end{minipage}\hfill
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/building_surface_plot} %Højre billede
+	\end{minipage}\\ %Captions and labels
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{The original image seen in grayscale.} %Venstre caption og label
+		\label{building_gray}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{Surface plot point created using ImageJ.} %Højre caption og label
+		\label{surface_plot}
+	\end{minipage}
+\end{figure}
+
+The following is mainly based on \citep{edge_lecture}.
+Edge detectors consist of three steps:
+\begin{itemize}
+\item Noise reduction
+\item Edge enhancement
+\item Edge localization
+\end{itemize}
+
+The first step, \textbf{noise reduction}, can be done using a filter. This could for instance be a median or mean filter. However, there is a dilemma when choosing the size of the filter. A large filter will remove more noise from the image, but it will also remove some of the edges. A smaller filter, on the other hand, keeps more edges but also more noise.
+
+The next step, \textbf{edge enhancement}, calculates the possible candidates for edges.

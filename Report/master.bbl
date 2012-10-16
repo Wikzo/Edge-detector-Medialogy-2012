@@ -1,22 +1,40 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{5}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
+\bibitem[bui()]{building}
+
+\newblock \textit{Image of building used throughout the report}.
+\newblock URL
+  \url{http://www.mccullagh.org/db9/1ds2-4/fbi-headquarters-building.jpg}.
+
 \bibitem[Block(2007)]{visual_story}
 \textbf{Block}, \textbf{2007}.
 \newblock Bruce Block.
 \newblock \textit{The Visual Story, Second Edition: Creating the Visual
   Structure of Film, TV and Digital Media}.
-\newblock  ISBN: 978-0240807799. Focal Press, 2007.
+\newblock  ISBN: 978-0240807799. Focal Press, second edition edition, 2007.
 
-\bibitem[Moeslund(2012)]{ip_book}
-\textbf{Moeslund}, \textbf{2012}.
+\bibitem[Moeslund(2012{\natexlab{a}})]{edge_lecture}
+\textbf{Moeslund}, \textbf{2012{\natexlab{a}}}.
+\newblock Thomas~B. Moeslund.
+\newblock \textit{Lecture AAU - Edge detection}, 2012.
+
+\bibitem[Moeslund(2012{\natexlab{b}})]{ip_book}
+\textbf{Moeslund}, \textbf{2012{\natexlab{b}}}.
 \newblock Thomas~B. Moeslund.
 \newblock \textit{Introduction to Video and Image Processing - Building real
   systems and applications}.
 \newblock  ISBN: 978-1447125020, Handbook. Springer, 2012.
+
+\bibitem[Snowden et~al.(2012)Snowden, Thompson, og Troscianko]{perception}
+\textbf{Snowden et~al.}, \textbf{2012}.
+\newblock Robert Snowden, Peter Thompson  og Tom Troscianko.
+\newblock \textit{Basic Vision: An Introduction to Visual Perception}.
+\newblock  978-0199572021. Oxford University Press, second edition edition,
+  2012.
 
 \end{thebibliography}

@@ -5,13 +5,15 @@
 \huge{Diagonal Edge Detection in C++}}
 
 \begin{figure} [H]
-\includegraphics[width=0.5\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/diagonal_plus_vertical_horizontal.jpg}
-  \centering
+\includegraphics[width=0.8\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/12_diagonal_plus_vertical_horizontal.jpg}
+\centering
+\label{building_diagonal_edge}
 \end{figure}
 \end{center}
+
 %\vspace{1.0cm}
 \begin{center}
-\Large{\textbf{Gustav Dahl, studienummer}}
+\Large{\textbf{Gustav Dahl, 20113263}}
 \end{center}
 \vfill
 Image Processing and Procedural Programming\\
