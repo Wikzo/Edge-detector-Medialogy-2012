@@ -17,7 +17,7 @@ Warning--empty  in building
 Warning--there's a number but no series in visual_story
 1 is an integer literal, not a string, for entry visual_story
 while executing---line 1485 of file sources/harvard.bst
-1 is an integer literal, not a string, for entry edge_lecture
+0 is an integer literal, not a string, for entry edge_lecture
 while executing---line 1485 of file sources/harvard.bst
 1 is an integer literal, not a string, for entry ip_book
 while executing---line 1485 of file sources/harvard.bst
