@@ -165,7 +165,7 @@ The result can be seen in figure \ref{threshold}
 \begin{figure} [htbp]
 \includegraphics[width=0.7\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/3_threshold}
 \centering
-\caption{Using a threshold the image becomes binary.}
+\caption{When using a threshold the image becomes binary.}
 \label{threshold}
 \end{figure}
 
@@ -242,22 +242,22 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 }
 \end{lstlisting}
 
-Depending on which Sobel direction is chosen (right diagonal, left diagonal, vertical or horizontal), the output image will look as follows:
+Depending on which Sobel direction is chosen (left diagonal, right diagonal, vertical or horizontal), the output image will look as follows:
 
 \begin{figure}[htbp]\centering
 	\begin{minipage}[b]{0.48\textwidth}\centering
-		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/6_edge_diagonal_right.jpg} %Venstre billede
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3//7_edge_diagonal_left.jpg} %Venstre billede
 	\end{minipage}\hfill
 	\begin{minipage}[b]{0.48\textwidth}\centering
-		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/7_edge_diagonal_left.jpg} %Højre billede
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/6_edge_diagonal_right.jpg} %Højre billede
 	\end{minipage}\\ %Captions and labels
 	\begin{minipage}[t]{0.48\textwidth}
-		\caption{Right diagonal.} %Venstre caption og label
-		\label{right_diagonal}
+		\caption{Left diagonal.} %Venstre caption og label
+		\label{left_diagonal}
 	\end{minipage}\hfill
 	\begin{minipage}[t]{0.48\textwidth}
-		\caption{Left diagonal.} %Højre caption og label
-		\label{left_diagonal}
+		\caption{Right diagonal.} %Højre caption og label
+		\label{right_diagonal}
 	\end{minipage}
 \end{figure}
 
@@ -278,7 +278,7 @@ Depending on which Sobel direction is chosen (right diagonal, left diagonal, ver
 	\end{minipage}
 \end{figure}
 
-Depending on what is needed, one of the images can be chosen. Even though the diagonal images are quite good, it is possible to combine all the images, which I have done with the following code:
+Depending on what is needed, one of the images can be chosen (the two diagonal images practically look identical). Even though the diagonal images are quite good, it is possible to combine all the images, which I have done with the following code:
 
 \begin{lstlisting}
 // both Mats should be same size!
@@ -350,7 +350,7 @@ Mat Erosion(Mat input, int radius)
 
 The result of this image can be seen in figure \ref{erosion}. By subtracting the original image with the eroded image, an outline can be seen (figure \ref{erosionOutline}). This does not give the diagonal edges, but it still provides a decent outline of the building, as well as the tree.
 
-\begin{figure}[htbp]\centering
+\begin{figure}[H]\centering
 	\begin{minipage}[b]{0.48\textwidth}\centering
 		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/4_erosion.jpg} %Venstre billede
 	\end{minipage}\hfill
@@ -365,6 +365,16 @@ The result of this image can be seen in figure \ref{erosion}. By subtracting the
 		\caption{The outline based on the erosion image.} %Højre caption og label
 		\label{erosionOutline}
 	\end{minipage}
+\end{figure}
+
+\section{Conclusion}
+Even though the actual edge detection is quite simple to implement and run, there are still a lot of calculations done to get to the final result. First the image needs to be converted to grayscale (unless it already is from the beginning), and a noise filter should be applied, as well as the thresholding. After this the program runs through all pixels, one by one, and checks whether there is an edge or not. First then can the final image be rendered. Despite the image having a relativity small size of 769 x 512, this still takes some time. Moreover, if there are multiple images, such as in a video capture, this obviously requires a lot of calculations. As an experiment I tried to replace the input image with a video capture from my webcam (without doing any optimizations or predictions), and the result was a very laggy, but quite amusing, image (see figure \ref{video_edge}).
+
+\begin{figure} [htbp]
+\includegraphics[width=0.7\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/13_video_edges.jpg}
+\centering
+\caption{Edge detection can be quite fun with a webcam!}
+\label{video_edge}
 \end{figure}
 
 %\lstinputlisting{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/Image.cpp}

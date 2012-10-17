@@ -31,7 +31,8 @@ int main()
 {
 	// Program description
 	cout << "Edge detection using the Sobel kernel (and OpenCV to load images)" << endl;
-	cout << "By Gustav Dahl - Medialogy 3rd semester 2012 - Aalborg University\n\n";
+	cout << "By Gustav Dahl - Medialogy 3rd semester 2012" << endl;
+	cout << "Aalborg University October 2012\n\n";
 	
 	// Load the original color image
     Mat colorImage = imread("0_building.jpg");

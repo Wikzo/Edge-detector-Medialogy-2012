@@ -9,6 +9,7 @@
 
 \include{theory}
 \include{code}
+\include{completeCode}
 
 
 %% Bibliography %%%

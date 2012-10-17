@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.9)  17 OCT 2012 18:34
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2012.10.9)  17 OCT 2012 19:05
 entering extended mode
 **master.tex
 
@@ -1638,7 +1638,9 @@ x")
 
 LaTeX Warning: Label `threshold' multiply defined.
 
-))
+)
+("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\completeC
+ode.aux"))
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
@@ -1741,7 +1743,7 @@ LaTeX Font Info:    Try loading font information for U+stmry on input line 3.
 ("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\frontpage
 .tex"
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/12_diagonal_plus_vertical_horizontal.jpg, id=54, 770.88pt x 513.92pt>
+_test3/12_diagonal_plus_vertical_horizontal.jpg, id=62, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/12_diagonal_plus_vertical_horizontal.jpg Graphic file (type jpg)
 
@@ -1783,7 +1785,7 @@ x" [3
 
 ]
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/1_grayscale.jpg, id=115, 770.88pt x 513.92pt>
+_test3/1_grayscale.jpg, id=125, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/1_grayscale.jpg Graphic file (type jpg)
 
@@ -1794,7 +1796,7 @@ etecting/MyOpenCV/OpenCV_test3/1_grayscale.jpg used on input line 22.
 (pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
 
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/building_surface_plot.png, id=116, 612.2875pt x 520.94624pt>
+_test3/building_surface_plot.png, id=126, 612.2875pt x 520.94624pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/building_surface_plot.png Graphic file (type png)
 
@@ -1813,7 +1815,7 @@ Underfull \hbox (badness 7704) in paragraph at lines 28--28
 V_test3/1_grayscale.jpg> <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_de
 tecting/MyOpenCV/OpenCV_test3/building_surface_plot.png (PNG copy)>]
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/sobel_ke
-rnel.jpg, id=141, 956.57375pt x 269.005pt>
+rnel.jpg, id=151, 956.57375pt x 269.005pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/sob
 el_kernel.jpg Graphic file (type jpg)
 
@@ -1840,7 +1842,7 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 31.
 
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/0_building.jpg, id=180, 770.88pt x 513.92pt>
+_test3/0_building.jpg, id=190, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/0_building.jpg Graphic file (type jpg)
 
@@ -1860,7 +1862,7 @@ etecting/MyOpenCV/OpenCV_test3/1_grayscale.jpg used on input line 63.
  [7 <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/Open
 CV_test3/0_building.jpg>]
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/mean_fil
-ter.jpg, id=215, 451.6875pt x 451.6875pt>
+ter.jpg, id=225, 451.6875pt x 451.6875pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/mea
 n_filter.jpg Graphic file (type jpg)
 
@@ -1871,7 +1873,7 @@ etecting/Report/mean_filter.jpg used on input line 83.
 (pdftex.def)             Requested size: 127.8013pt x 127.80182pt.
 
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/2_meanFilter.jpg, id=216, 770.88pt x 513.92pt>
+_test3/2_meanFilter.jpg, id=226, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/2_meanFilter.jpg Graphic file (type jpg)
 
@@ -1884,7 +1886,7 @@ etecting/MyOpenCV/OpenCV_test3/2_meanFilter.jpg used on input line 90.
 ilter.jpg> <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpen
 CV/OpenCV_test3/2_meanFilter.jpg>] [9]
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/3_threshold.jpg, id=279, 770.88pt x 513.92pt>
+_test3/3_threshold.jpg, id=289, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/3_threshold.jpg Graphic file (type jpg)
 
@@ -1896,31 +1898,31 @@ etecting/MyOpenCV/OpenCV_test3/3_threshold.jpg used on input line 166.
  [10 <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/Ope
 nCV_test3/3_threshold.jpg>] [11]
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/6_edge_diagonal_right.jpg, id=355, 770.88pt x 513.92pt>
+_test3//7_edge_diagonal_left.jpg, id=365, 770.88pt x 513.92pt>
+File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
+penCV_test3//7_edge_diagonal_left.jpg Graphic file (type jpg)
+
+<use C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/Op
+enCV_test3//7_edge_diagonal_left.jpg>
+Package pdftex.def Info: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_d
+etecting/MyOpenCV/OpenCV_test3//7_edge_diagonal_left.jpg used on input line 249
+.
+(pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
+
+<C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
+_test3/6_edge_diagonal_right.jpg, id=366, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/6_edge_diagonal_right.jpg Graphic file (type jpg)
 
 <use C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/Op
 enCV_test3/6_edge_diagonal_right.jpg>
 Package pdftex.def Info: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_d
-etecting/MyOpenCV/OpenCV_test3/6_edge_diagonal_right.jpg used on input line 249
+etecting/MyOpenCV/OpenCV_test3/6_edge_diagonal_right.jpg used on input line 252
 .
 (pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
 
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/7_edge_diagonal_left.jpg, id=356, 770.88pt x 513.92pt>
-File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
-penCV_test3/7_edge_diagonal_left.jpg Graphic file (type jpg)
-
-<use C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/Op
-enCV_test3/7_edge_diagonal_left.jpg>
-Package pdftex.def Info: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_d
-etecting/MyOpenCV/OpenCV_test3/7_edge_diagonal_left.jpg used on input line 252.
-
-(pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
-
-<C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/8_edge_vertical.jpg, id=357, 770.88pt x 513.92pt>
+_test3/8_edge_vertical.jpg, id=367, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/8_edge_vertical.jpg Graphic file (type jpg)
 
@@ -1931,7 +1933,7 @@ etecting/MyOpenCV/OpenCV_test3/8_edge_vertical.jpg used on input line 266.
 (pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
 
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/9_edge_horizontal.jpg, id=358, 770.88pt x 513.92pt>
+_test3/9_edge_horizontal.jpg, id=368, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/9_edge_horizontal.jpg Graphic file (type jpg)
 
@@ -1941,11 +1943,11 @@ Package pdftex.def Info: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_d
 etecting/MyOpenCV/OpenCV_test3/9_edge_horizontal.jpg used on input line 269.
 (pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
  [12 <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/Ope
-nCV_test3/6_edge_diagonal_right.jpg> <C:/Users/Wikzo/Desktop/Procedural Program
-ming/Edge_detecting/MyOpenCV/OpenCV_test3/7_edge_diagonal_left.jpg> <C:/Users/W
-ikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/OpenCV_test3/8_edge
-_vertical.jpg> <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/My
-OpenCV/OpenCV_test3/9_edge_horizontal.jpg>]
+nCV_test3//7_edge_diagonal_left.jpg> <C:/Users/Wikzo/Desktop/Procedural Program
+ming/Edge_detecting/MyOpenCV/OpenCV_test3/6_edge_diagonal_right.jpg> <C:/Users/
+Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/OpenCV_test3/8_edg
+e_vertical.jpg> <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/M
+yOpenCV/OpenCV_test3/9_edge_horizontal.jpg>]
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/12_diagonal_plus_vertical_horizontal.jpg Graphic file (type jpg)
 
@@ -1957,7 +1959,7 @@ etecting/MyOpenCV/OpenCV_test3/12_diagonal_plus_vertical_horizontal.jpg used on
 (pdftex.def)             Requested size: 426.0pt x 283.9978pt.
  [13]
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/4_erosion.jpg, id=405, 770.88pt x 513.92pt>
+_test3/4_erosion.jpg, id=415, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/4_erosion.jpg Graphic file (type jpg)
 
@@ -1968,7 +1970,7 @@ etecting/MyOpenCV/OpenCV_test3/4_erosion.jpg used on input line 355.
 (pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
 
 <C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
-_test3/5_erosionOutline.jpg, id=406, 770.88pt x 513.92pt>
+_test3/5_erosionOutline.jpg, id=416, 770.88pt x 513.92pt>
 File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
 penCV_test3/5_erosionOutline.jpg Graphic file (type jpg)
 
@@ -1977,19 +1979,42 @@ enCV_test3/5_erosionOutline.jpg>
 Package pdftex.def Info: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_d
 etecting/MyOpenCV/OpenCV_test3/5_erosionOutline.jpg used on input line 358.
 (pdftex.def)             Requested size: 204.47818pt x 136.31361pt.
-) [14] [15 <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpen
-CV/OpenCV_test3/4_erosion.jpg> <C:/Users/Wikzo/Desktop/Procedural Programming/E
-dge_detecting/MyOpenCV/OpenCV_test3/5_erosionOutline.jpg>]
+ [14]
+<C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV
+_test3/13_video_edges.jpg, id=455, 632.3625pt x 472.76625pt>
+File: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/O
+penCV_test3/13_video_edges.jpg Graphic file (type jpg)
+
+<use C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/Op
+enCV_test3/13_video_edges.jpg>
+Package pdftex.def Info: C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_d
+etecting/MyOpenCV/OpenCV_test3/13_video_edges.jpg used on input line 374.
+(pdftex.def)             Requested size: 298.1987pt x 222.94319pt.
+) [15 <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/Op
+enCV_test3/4_erosion.jpg> <C:/Users/Wikzo/Desktop/Procedural Programming/Edge_d
+etecting/MyOpenCV/OpenCV_test3/5_erosionOutline.jpg> <C:/Users/Wikzo/Desktop/Pr
+ocedural Programming/Edge_detecting/MyOpenCV/OpenCV_test3/13_video_edges.jpg>]
+("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\completeC
+ode.tex"
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 2.
+
+("C:/Users/Wikzo/Desktop/Procedural Programming/Edge_detecting/MyOpenCV/OpenCV_
+test3/Image.cpp" [16
+
+
+
+] [17] [18] [19] [20] [21] [22] [23])) [24]
 ("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\master.bb
 l") 
 AED: lastpage setting LastPage
-[16
+[25
 
 
 ]
 \tf@toc=\write6
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 21.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 21.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 22.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 22.
 
 ("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\master.au
 x"
@@ -2000,25 +2025,27 @@ x"
 ("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\theory.au
 x")
 ("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\code.aux"
-))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 21.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 21.
+)
+("C:\Users\Wikzo\Desktop\Procedural Programming\Edge_detecting\Report\completeC
+ode.aux"))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 22.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 22.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: 80D71AFA6ED8B9A28708F9B7E6E8D639;758.
+(rerunfilecheck)             Checksum: 8292A390D206FE2E48640D750BE2033D;870.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 21.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 22.
  ) 
 Here is how much of TeX's memory you used:
- 32369 strings out of 493921
- 604031 string characters out of 3144876
- 1030972 words of memory out of 3000000
- 34780 multiletter control sequences out of 15000+200000
+ 32889 strings out of 493921
+ 613294 string characters out of 3144876
+ 1040308 words of memory out of 3000000
+ 34850 multiletter control sequences out of 15000+200000
  28482 words of font info for 80 fonts, out of 3000000 for 9000
  843 hyphenation exceptions out of 8191
- 63i,12n,122p,859b,2247s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,12n,122p,935b,2247s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-ts1.enc}
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/cm-super/cm-super-t1.enc}{C:
 /Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Fil
@@ -2041,9 +2068,9 @@ uper/sfti1095.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-supe
 r/sftt1000.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/cm-super/s
 ftt1095.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/bookman/ubkd8a.p
 fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/bookman/ubkl8a.pfb>
-Output written on master.pdf (17 pages, 2810086 bytes).
+Output written on master.pdf (26 pages, 3074302 bytes).
 PDF statistics:
- 580 PDF objects out of 1000 (max. 8388607)
- 261 named destinations out of 1000 (max. 500000)
- 179 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1151 PDF objects out of 1200 (max. 8388607)
+ 697 named destinations out of 1000 (max. 500000)
+ 200 words of extra memory for PDF output out of 10000 (max. 10000000)
 
