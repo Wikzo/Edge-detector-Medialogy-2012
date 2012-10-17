@@ -1,20 +1,21 @@
 \chapter{Theory about Edge Detection}
 \section{Edge definition}
-An edge in an image is basically a place in an image where there is a contrast between two points.
+\citep{visual_story} defines an edge as the apparent line around the borders of a two-dimensional object.
 
-\citet{visual_story} describes an edge as the apparent line around the borders of a two-dimensional object.
-
-Another definition is given by \citep{ip_book} who writes that an edge in an image is defined as a position where there is a significant change in gray-level values.
+Another way to describe an edge is given by \citep{ip_book}; he writes that an edge in an image is defined as a position where there is a significant change in gray-level values.
 
 In other words, \textbf{an edge in an image is where the intensity changes dramatically.} A perfect edge would have to be a transition from e.g. black to white over just one pixel, but in the real world this rarely happen, unless it is a binary image where there are only black and white pixels.
 
-\section{The usefulness of edges}
-Edges are typically used to define the boundary of an object. This reduces a lot of calculations needed to be done, either by the human brain or a computer,, since it is only necessary to look at the outline and not the whole object. It allows for higher levels of abstraction. This system is used in the way a human perceives the world, using ganglion cell signal changes \citep{perception} \fxnote{bedre skrive + Perception bog}. In machine vision this system is applied, e.g. if a robot needs to recognize and work with a specific object.
+\section{Practical use of edge detection}
+Edges are typically used to define the boundary of an object. This reduces a lot of calculations needed to be done, either by the human brain or a computer, since it is only necessary to look at the outline and not the whole object. It allows for higher levels of abstraction.
+
+The human brain makes use of this principle. To reduce the amount of information transported from the eyes to the brain, we perceive changes using the retinal ganglion cells. \citep{perception} In machine vision this system is simulated using image edge detection. A typical example could be a robot that should be able to recognize and work with a specific object. The robot needs to know where the object is located, and this can be done using edge detection.
 
 \section{The concept of edge detection}
-When working with edges, one can think about it like gradients. The point of a gradient can be defined as the slope of the curve at this point. This corresponds to the slope of the tangent at the current point. \citep{ip_book} 
+\label{concept_edge_detection}
+When working with edges, one can think about it like gradients. The point of a gradient can be defined as the slope of the curve at the point. This corresponds to the slope of the tangent at the current point. \citep{ip_book} 
 
-Having this in mind, edges will then be places where there are steep hills. Here, each point will have two gradients: one in the x-direction and another in the y-direction. These two gradients span a plane called the \textit{tangent plane}. The gradient in the end is defined as a vector called $\vec{G}(g_x,g_y)$, where $g_x$ is the gradient in the x-direction and $g_y$ is the gradient in the y-direction. Then $\vec{G}(g_x,g_y)$ can be considered as the direction with the steepst slope. \citep{ip_book}. Using the program ImageJ, this can be illustrated by creating a so-called \textit{surface plot}, see figure \ref{building_gray} and \ref{surface_plot}.
+Having this in mind, edges will then be places where there are steep hills. Here, each point will have two gradients: one in the x-direction and another in the y-direction. These two gradients span a plane called the \textit{tangent plane}. The gradient in is defined as a vector called $\vec{G}(g_x,g_y)$, where $g_x$ is the gradient in the x-direction and $g_y$ is the gradient in the y-direction. $\vec{G}(g_x,g_y)$ can be considered as the direction with the steepest slope. \citep{ip_book}. Using the program ImageJ, this can be illustrated by creating a so-called \textit{surface plot}, see figure \ref{surface_plot}.
 
 \begin{figure}[htbp]\centering
 	\begin{minipage}[b]{0.48\textwidth}\centering
@@ -28,12 +29,24 @@ Having this in mind, edges will then be places where there are steep hills. Here
 		\label{building_gray}
 	\end{minipage}\hfill
 	\begin{minipage}[t]{0.48\textwidth}
-		\caption{Surface plot point created using ImageJ.} %Højre caption og label
+		\caption{Surface plot of the same image, created with ImageJ.} %Højre caption og label
 		\label{surface_plot}
 	\end{minipage}
 \end{figure}
 
+The gradient has both a direction and a magnitude. The magnitude describes how steep the gradient is. It can be calculated by finding the length of the gradient vector, see equation \ref{magnitude_vector}. To achieve a faster implementation an approximation is often used, see \ref{approx_vector}.
+
+\begin{align}
+\text{Magnitude} = \sqrt{g_x^2 + g_y^2}
+\label{magnitude_vector}
+\end{align}
+\begin{align}
+\text{Approximated magnitude} = |g_x^2| + |g_y^2|
+\label{approx_vector}
+\end{align}
+
 The following is mainly based on \citep{edge_lecture}.
+
 Edge detectors consist of three steps:
 \begin{itemize}
 \item Noise reduction
@@ -43,11 +56,11 @@ Edge detectors consist of three steps:
 
 The first step, \textbf{noise reduction}, can be done using a filter. Often an image contains an amount of noisy pixels with values that can change rapidly. These should not count as edges, and therefore a filter is used to reduce the noise, e.g. a mean or median filter is applied before the edge detection. However, there is a dilemma when choosing the size of the filter. A large filter will remove more noise from the image, but it will also remove some of the edges. A smaller filter, on the other hand, keeps more edges but also more noise.
 
-The next step, \textbf{edge enhancement}, calculates the possible candidates for edges. After this step it is time to decide what edges to keep using \textbf{edge localization}.
+The next step, \textbf{edge enhancement}, calculates the possible candidates for edges. This can be done in various ways. After this step it is time to decide what edges to keep using \textbf{edge localization}.
 
 \section{The Sobel filter}
-Various edge detectors exist. Among these are the Sobel and Canny filter. Sobel is the simplest of the two to implement and have therefore been chosen for this mini project. The Sobel filter is based on gray-level gradients, which is a measure of the steepness of what can be described as an image landscape (see figure \ref{surface_plot}). This is calculated for each individual pixel using the first-order derivative: \begin{align}f'(x,y) = g(x,y)\nonumber \end{align}
-Since the function of the image is not continuous, an approximation is used for the first-order derivative, as shown in \ref{approx_x} and \ref{approx_y}.
+Multiple edge detectors exist. Among these are the Sobel and Canny filter. Sobel is the simplest of the two to implement and have therefore been chosen for this mini project. Its kernel weights row and column pixels in the center more than the rest. The Sobel filter is based on gray-level gradients, which is a measure of the steepness of what can be described as an image landscape (see figure \ref{surface_plot}). This is calculated for each individual pixel using the first-order derivative: \begin{align}f'(x,y) = g(x,y)\nonumber \end{align}
+Since the function of the image is not continuous but discrete, an approximation is used for the first-order derivative, as shown in equations \ref{approx_x} and \ref{approx_y}.
 
 \begin{align}
 g_x(x,y) \approx f(x+1,y)-f(x-1,y)
@@ -59,7 +72,7 @@ g_y(x,y) \approx f(x, y+1)-f(x,y-1)
 \label{approx_y}
 \end{align}
 
-Using correlation with the Sobel kernel can aid in finding either horizontal, vertical or diagonal edges in an image. This is done by applying the filter on the image. The task for this mini project was to locate diagonal edges; however, I chose to use all the kernels seen in figure \ref{sobel_kernel} and combine them to get the most optimal image possible.
+Using correlation with the Sobel kernel can aid in finding either horizontal, vertical or diagonal edges in an image. This is done by applying the filter on the image via correlation. Depending on which kernel is used, lines will be more or less clear. The task for this mini project was to locate only diagonal edges. However, I chose to use all the kernels seen in figure \ref{sobel_kernel} and combine them to get the most optimal image possible.
 
 \begin{figure} [htbp]
 \includegraphics[width=0.8\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/sobel_kernel.jpg}
@@ -67,3 +80,4 @@ Using correlation with the Sobel kernel can aid in finding either horizontal, ve
 \label{sobel_kernel}
 \caption{The different Sobel kernels focus on either horizontal, vertical or diagonal edges.}
 \end{figure}
+

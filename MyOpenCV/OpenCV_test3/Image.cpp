@@ -12,8 +12,11 @@ enum SobelDirection
 	Horizontal
 };
 
-const int THRESHOLD_GRAYSCALE = 133; // optimal value was found using ImageJ
-const int THRESHOLD_SOBEL = 100; // found by experimenting
+// optimal value was found using ImageJ
+const int THRESHOLD_GRAYSCALE = 133; 
+
+// found by experimenting
+const int THRESHOLD_SOBEL = 100;
 
 Mat ConvertColorImageToBlackWhite(Mat colorImage);
 Mat MeanFilter(Mat input);
@@ -105,7 +108,8 @@ int main()
 
 Mat ConvertColorImageToBlackWhite(Mat colorImage)
 {
-	Mat grayScaleImage(colorImage.rows, colorImage.cols, CV_8UC1); // new image with only 1 channel
+	// new 8-bit unsigned grayscale image with only 1 channel
+	Mat grayScaleImage(colorImage.rows, colorImage.cols, CV_8UC1); 
 
 	// Formula for converting from color to grayscale (3.3, p. 30 in Introduction to Video and Image Processing book)
 	// I = weightR * R + weightG * G + weightB * B
@@ -120,6 +124,10 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage)
 	{
 		for (int x = 0; x < colorImage.cols; x++)
 		{
+			// [0] = blue channel
+			// [1] = green channel
+			// [2] = red channel
+
 			// Calculate grayscale value
 			float grayValue = colorImage.at<cv::Vec3b>(y, x)[0] * BlueWeight
 				+ colorImage.at<cv::Vec3b>(y, x)[1] * GreenWeight
@@ -135,8 +143,9 @@ Mat ConvertColorImageToBlackWhite(Mat colorImage)
 
 Mat MeanFilter(Mat input)
 {
-	// 3x3 kernel size
+	// 5x5 kernel
 
+	// Make a temporary clone of the input image
 	Mat mean = input.clone();
 
 	// Loop through all pixels
@@ -147,6 +156,7 @@ Mat MeanFilter(Mat input)
 			if (x - 2 < 0 || y - 2 < 0) // don't go out of bounds
 				continue;
 
+			// Apply the kernel
 			mean.at<uchar>(y, x) = (
 				input.at<uchar>(y-2, x-2) + input.at<uchar>(y-2, x-1)
 				+ input.at<uchar>(y-2, x) + input.at<uchar>(y-2, x+1)
@@ -191,6 +201,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 {
 	Mat edge = input.clone();
 
+	// STEP 1: NOISE REDUCTION
 	if (useMeanFilterBeforeDoingEdgeDetecting)
 		edge = MeanFilter(edge);
 
@@ -204,7 +215,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
-
+				// STEP TWO: EDGE ENHANCEMENT
 				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
@@ -222,6 +233,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (temp < 0)
 					temp *= -1;
 
+				// STEP THREE: EDGE LOCALIZATION
 				// Map values from 0 to 255
 				if (temp <= threshold)
 					temp = 0;
@@ -242,6 +254,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
+				// STEP TWO: EDGE ENHANCEMENT
 				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
@@ -259,6 +272,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (temp < 0)
 					temp *= -1;
 
+				// STEP THREE: EDGE LOCALIZATION
 				// Map values from 0 to 255
 				if (temp <= threshold)
 					temp = 0;
@@ -280,6 +294,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
+				// STEP TWO: EDGE ENHANCEMENT
 				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -1
@@ -297,6 +312,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (temp < 0)
 					temp *= -1;
 
+				// STEP THREE: EDGE LOCALIZATION
 				// Map values from 0 to 255
 				if (temp <= threshold)
 					temp = 0;
@@ -318,6 +334,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
 					continue;
 
+				// STEP TWO: EDGE ENHANCEMENT
 				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -1
@@ -335,6 +352,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 				if (temp < 0)
 					temp *= -1;
 
+				// STEP THREE: EDGE LOCALIZATION
 				// Map values from 0 to 255
 				if (temp <= threshold)
 					temp = 0;
@@ -352,12 +370,11 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 		putText(edge, "ERROR - Sobel type not defined!", Point(10, 50), FONT_HERSHEY_PLAIN, 2, Scalar(0, 0, 255), 4, 8, false);
 	}
 
-	// Threshold
-	edge = ThresholdBlackWhiteImage(edge, 30);
 	return edge;
 }
 
-Mat AddTwoMatsTogether(Mat matA, Mat matB) // should be same size!
+//  both Mats should be same size!
+Mat AddTwoMatsTogether(Mat matA, Mat matB)
 {
 	Mat output = matA.clone();
 

@@ -1,2 +1,370 @@
-\chapter{The code}
-\lstinputlisting{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/Image.cpp}
+\chapter{Implementation}
+As mentioned previously, OpenCV was used together with C++ to load in an image. OpenCV uses the matrix class denoted as \textit{Mat} when working with images. The Mat type consists of various member fields and functions, such as its rows and columns.
+
+\section{From color to grayscale}
+Even though the task was to work with grayscale images, I chose to load in a color image and convert it to grayscale manually. This was done using equation \ref{grayscale} and can be seen on figure \ref{original_image} and \ref{new_grayscale_image}.
+
+\begin{align}
+I = W_R \g R+W_G \g G+W_B \g B
+\label{grayscale}
+\end{align}
+
+where \textit{I} is the intensity, and $W_R$, $W_G$ and $W_B$ are weight factors for the red, green and blue channel. It should be noted that $W_R + W_G + W_B = 1$, so the values stay within one byte in the range of [0, 255]. Using various weight values, one can achieve a grayscale image that fits the human eye. A common standard of weight values, used within TV and image/video coding are listed in \ref{standard_grayscale}. \citep{ip_book}
+
+\begin{align}
+W_R = 0.299, \hspace{20 mm} W_G = 0.587, \hspace{20 mm} W_B = 0.114
+\label{standard_grayscale}
+\end{align}
+
+In OpenCV, the color channels are stored in the order of blue, green and red (and not red, green and blue as in many other places). Using a function named \textit{ConvertColorImageToBlackWhite}, the image is converted from a three-channel color image to a one-channel grayscale image. This is done by looping through each pixel and assign the grayscale value using equation \ref{grayscale}:
+
+\begin{lstlisting}
+Mat ConvertColorImageToBlackWhite(Mat colorImage)
+{
+	// new 8-bit unsigned grayscale image with only 1 channel
+	Mat grayScaleImage(colorImage.rows, colorImage.cols, CV_8UC1); 
+
+	// Formula for converting from color to grayscale (3.3, p. 30 in Introduction to Video and Image Processing book)
+	// I = weightR * R + weightG * G + weightB * B
+
+	// Common weight values used in TV production to calculate to grayscale
+	float RedWeight = 0.299;
+	float GreenWeight = 0.587;
+	float BlueWeight = 0.114;
+
+	// Iterate through all the pixels and apply the formula for grayscale
+	for (int y = 0; y < colorImage.rows; y++) // rows
+	{
+		for (int x = 0; x < colorImage.cols; x++)
+		{
+			// [0] = blue channel
+			// [1] = green channel
+			// [2] = red channel
+
+			// Calculate grayscale value
+			float grayValue = colorImage.at<cv::Vec3b>(y, x)[0] * BlueWeight
+				+ colorImage.at<cv::Vec3b>(y, x)[1] * GreenWeight
+				+ colorImage.at<cv::Vec3b>(y, x)[2] * RedWeight;
+
+			// Apply the grayscale value (0-255)
+			grayScaleImage.at<uchar>(y, x) = grayValue;		
+
+		}
+	}	
+	return grayScaleImage;
+}
+\end{lstlisting}
+
+\begin{figure}[htbp]\centering
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/0_building.jpg} %Venstre billede
+	\end{minipage}\hfill
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/1_grayscale.jpg} %Højre billede
+	\end{minipage}\\ %Captions and labels
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{The original color image.} %Venstre caption og label
+		\label{original_image}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{The new grayscale image.} %Højre caption og label
+		\label{new_grayscale_image}
+	\end{minipage}
+\end{figure}
+
+\section{Mean filter}
+To avoid unnecessary noise, a mean filter was applied. Using a kernel, it takes the average of the pixel values, which results in a blurred image (see figure \ref{mean_blur}). By doing this, all small edges are removed, leaving only the significant edges. In practice this is done by going through all pixels in the image and apply a kernel using correlation. It basically sums the values and divides the result by the size of the kernel.
+
+A median filter could also have been used, but this is more appropriate for images with the so-called \textit{salt and pepper noise}.
+
+In this case a 5x5 kernel (radius: 2) has been used, and therefore the values are divided by 25 (see figure \ref{mean_filter_kernel}).
+
+\begin{figure} [htbp]
+\includegraphics[width=0.3\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/mean_filter.jpg}
+\centering
+\caption{A 5x5 mean filter.}
+\label{mean_filter_kernel}
+\end{figure}
+
+\begin{figure} [htbp]
+\includegraphics[width=0.7\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/2_meanFilter.jpg}
+\centering
+\caption{A mean filter results in a blurred image.}
+\label{mean_blur}
+\end{figure}
+
+It should be noted that there is a problem associated with neighbourhood processing (which a mean filter is a part of) called \textit{the border problem}. Since the kernel cannot be applied outside of the image, the pixels from the outer borders will not be touched by the filter. The bigger the radius of the filter is, the bigger the untouched border will be. For simplistic sake this problem has not been addressed in the following code:
+
+\begin{lstlisting}
+Mat MeanFilter(Mat input)
+{
+	// 5x5 kernel
+
+	// Make a temporary clone of the input image
+	Mat mean = input.clone();
+
+	// Loop through all pixels
+	for (int y = 0; y < input.rows-2; y++)
+	{
+		for (int x = 0; x < input.cols-2; x++)
+		{
+			if (x - 2 < 0 || y - 2 < 0) // don't go out of bounds
+				continue;
+
+			// Apply the kernel
+			mean.at<uchar>(y, x) = (
+				input.at<uchar>(y-2, x-2) + input.at<uchar>(y-2, x-1)
+				+ input.at<uchar>(y-2, x) + input.at<uchar>(y-2, x+1)
+				+ input.at<uchar>(y-2, x+2) + input.at<uchar>(y-1, x-2)
+				+ input.at<uchar>(y-1, x-1) + input.at<uchar>(y-1, x)
+				+ input.at<uchar>(y-1, x+1) + input.at<uchar>(y-1, x+2)
+				+ input.at<uchar>(y, x-2) + input.at<uchar>(y, x-1)
+				+ input.at<uchar>(y, x) + input.at<uchar>(y, x+1)
+				+ input.at<uchar>(y, x+2) + input.at<uchar>(y+1, x-2)
+				+ input.at<uchar>(y+1, x-1) + input.at<uchar>(y+1, x)
+				+ input.at<uchar>(y+1, x+1) + input.at<uchar>(y+1, x+2)
+				+ input.at<uchar>(y+2, x-2)	+ input.at<uchar>(y+2, x-1)
+				+ input.at<uchar>(y+2, x) + input.at<uchar>(y+2, x+1)
+				+ input.at<uchar>(y+2, x+2)
+				) / 25;
+		}
+	}
+
+	return mean;
+}
+\end{lstlisting}
+
+\section{Thresholding}
+Before the actual edge detection is used, a threshold is applied. This result in a binary image where all pixels are either black (0) or white (255); there is nothing in between. The threshold value can vary from image to image. In this example ImageJ was chosen to automatically find the best threshold value for the image of the building, which turned out to be 133. The code  for doing the threshold is quite simple:
+
+\begin{lstlisting}
+// optimal value was found using ImageJ
+const int THRESHOLD_GRAYSCALE = 133; 
+Mat ThresholdBlackWhiteImage(Mat blackWhiteImage, int threshold)
+{
+	Mat image = blackWhiteImage.clone();
+
+	// Loop through all pixels and set them to either 255 (white) or 0 (black) using the threhold value
+	for (int y = 0; y < image.rows; y++)
+	{
+		for (int x = 0; x < image.cols; x++)
+		{
+			if (image.at<uchar>(y, x) >= threshold)
+				image.at<uchar>(y, x) = 255;
+			else
+				image.at<uchar>(y, x) = 0;
+		}
+	}
+
+	return image;
+}
+\end{lstlisting}
+
+The result can be seen in figure \ref{threshold}
+
+\begin{figure} [htbp]
+\includegraphics[width=0.7\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/3_threshold}
+\centering
+\caption{Using a threshold the image becomes binary.}
+\label{threshold}
+\end{figure}
+
+\section{The edge detection}
+As mentioned in section \ref{concept_edge_detection}, edge detection consists of three basic steps, which I have put into a function called \textit{SobelEdgeDetecting}. The first step  is doing noise reduction - in this case, applying the before-mentioned mean filter.
+
+When this is done, the Sobel kernel is applied on the who image. This is implemented with a nested for loop that goes through all the pixels, one by one, and applies the specified kernel. As mentioned earlier, I have chosen to implement not only a diagonal Sobel edge kernel, but also horizontal and vertical. This can be specified using an enumerator variable called SobelDirection.
+
+Finally, it is time to decide what edges to keep and what to throw away. This is done using a simple threshold check, like in the threshold function defined earlier.
+
+All this leave of with the following code. Note that I have chosen to omit all the direction checks to make it easier to read. In the appendix the code in all its length can be seen.
+
+\begin{lstlisting}
+enum SobelDirection
+{
+	Diagonal_Right,
+	Diagonal_Left,
+	Vertical,
+	Horizontal
+};
+
+// found by experimenting
+const int THRESHOLD_SOBEL = 100;
+
+Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFilterBeforeDoingEdgeDetecting, int threshold)
+{
+	Mat edge = input.clone();
+
+	// STEP 1: NOISE REDUCTION
+	if (useMeanFilterBeforeDoingEdgeDetecting)
+		edge = MeanFilter(edge);
+
+	// Apply diagonal edge detecting RIGHT
+	if (direction == Diagonal_Right)
+	{
+		for (int y = 0; y < input.rows-1; y++)
+		{
+			for (int x = 0; x < input.cols-1; x++)
+			{
+				if (x-1 < 0 || y-1 < 0) // don't go out of bounds
+					continue;
+
+				// STEP TWO: EDGE ENHANCEMENT
+				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				int temp = (
+					(input.at<uchar>(y-1, x-1)) * -2
+					+ (input.at<uchar>(y, x-1)) * -1
+					+ (input.at<uchar>(y+1, x-1)) * 0
+					+ (input.at<uchar>(y-1, x)) * -1
+					+ (input.at<uchar>(y, x)) * 0
+					+ (input.at<uchar>(y+1, x+0)) * 1
+					+ (input.at<uchar>(y-1, x+1)) * 0
+					+ (input.at<uchar>(y, x+1)) * 1
+					+ (input.at<uchar>(y+1, x+1)) * 2
+					);
+
+				// Absolute value
+				if (temp < 0)
+					temp *= -1;
+
+				// STEP THREE: EDGE LOCALIZATION
+				// Map values from 0 to 255
+				if (temp <= threshold)
+					temp = 0;
+				else
+					temp = 255;
+				
+
+				edge.at<uchar>(y, x) = temp;
+			}
+		}
+	}
+		return edge;
+}
+\end{lstlisting}
+
+Depending on which Sobel direction is chosen (right diagonal, left diagonal, vertical or horizontal), the output image will look as follows:
+
+\begin{figure}[htbp]\centering
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/6_edge_diagonal_right.jpg} %Venstre billede
+	\end{minipage}\hfill
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/7_edge_diagonal_left.jpg} %Højre billede
+	\end{minipage}\\ %Captions and labels
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{Right diagonal.} %Venstre caption og label
+		\label{right_diagonal}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{Left diagonal.} %Højre caption og label
+		\label{left_diagonal}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[htbp]\centering
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/8_edge_vertical.jpg} %Venstre billede
+	\end{minipage}\hfill
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/9_edge_horizontal.jpg} %Højre billede
+	\end{minipage}\\ %Captions and labels
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{Vertical.} %Venstre caption og label
+		\label{vertical}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{Horizontal.} %Højre caption og label
+		\label{horizontal}
+	\end{minipage}
+\end{figure}
+
+Depending on what is needed, one of the images can be chosen. Even though the diagonal images are quite good, it is possible to combine all the images, which I have done with the following code:
+
+\begin{lstlisting}
+// both Mats should be same size!
+Mat AddTwoMatsTogether(Mat matA, Mat matB)
+{
+	Mat output = matA.clone();
+
+	for (int y = 0; y < matA.rows; y++)
+	{
+		for (int x = 0; x < matA.cols; x++)
+		{
+			output.at<uchar>(y, x) = matA.at<uchar>(y, x) + matB.at<uchar>(y, x);
+		}
+
+	}
+
+	output = ThresholdBlackWhiteImage(output, THRESHOLD_GRAYSCALE);
+	return output;
+}
+\end{lstlisting}
+
+Combining all four images into one gives this result. Compared with the original image (figure \ref{original_image}), the edges are quite clear.
+
+\begin{figure} [htbp]
+\includegraphics[width=1.0\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/12_diagonal_plus_vertical_horizontal.jpg}
+\centering
+\caption{The final image where all Sobel directions are combined.}
+\label{threshold}
+\end{figure}
+
+\section{Erosion outline}
+Another way to find edges is using the concept of morphology, more specifically the erosion operation. Erosion basically makes an image smaller. Subtracting this from the original image results in an outline. Even though this is not as precise as the Sobel edge detection, it is interesting to compare the two.
+
+The idea behind morphology is simple and works like neighbourhood processing (such as the mean and Sobel filter). Here the kernel is denoted as the \textit{structuring element} and contains 0's and 1's. When doing erosion, you look at each of the 1's in the structuring element and see if the corresponding pixel is also a 1 (or 255, meaning it is white). If this is the case for all of the 1's in the structuring element, the structuring element is "fitting" the image. If this is not the case, the pixels are set to 0, which has the result of shrinking the overall image. \citep{ip_book}
+
+The erosion function is programmed in the following manner:
+
+\begin{lstlisting}
+// Uses a grayscale image
+Mat Erosion(Mat input, int radius)
+{
+	Mat output = input.clone();
+
+	for(int x = radius; x < input.cols-radius; x++)
+	{
+		for(int y = radius; y < input.rows-radius; y++)
+		{
+			bool pixelIsaccepted = true;
+			for(int filterX = x - radius; pixelIsaccepted && filterX <= x + radius; filterX++)
+			{
+				for(int filterY = y - radius; pixelIsaccepted && filterY <= y + radius; filterY++)
+				{
+					if (input.at<uchar>(filterY,filterX) == 0)
+					{
+						pixelIsaccepted = false;
+					}
+				}
+			}
+			if (pixelIsaccepted == true)
+				output.at<uchar>(y,x) = 255;
+			else
+				output.at<uchar>(y,x) = 0;
+		}
+	}
+
+	return output;
+}
+\end{lstlisting}
+
+The result of this image can be seen in figure \ref{erosion}. By subtracting the original image with the eroded image, an outline can be seen (figure \ref{erosionOutline}). This does not give the diagonal edges, but it still provides a decent outline of the building, as well as the tree.
+
+\begin{figure}[htbp]\centering
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/4_erosion.jpg} %Venstre billede
+	\end{minipage}\hfill
+	\begin{minipage}[b]{0.48\textwidth}\centering
+		\includegraphics[width=1.00\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/5_erosionOutline.jpg} %Højre billede
+	\end{minipage}\\ %Captions and labels
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{The image has become smaller due to the erosion operation.} %Venstre caption og label
+		\label{erosion}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\caption{The outline based on the erosion image.} %Højre caption og label
+		\label{erosionOutline}
+	\end{minipage}
+\end{figure}
+
+%\lstinputlisting{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/Image.cpp}
