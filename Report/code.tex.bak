@@ -1,5 +1,5 @@
 \chapter{Implementation}
-As mentioned previously, OpenCV was used together with C++ to load in an image. OpenCV uses the matrix class denoted as \textit{Mat} when working with images. The Mat type consists of various member fields and functions, such as its rows and columns.
+As mentioned in the introduction, the OpenCV library was used together with C++ to load in an image. OpenCV uses the matrix class denoted as \textit{Mat} when working with images. The Mat type consists of various member fields and functions, such as its rows and columns.
 
 \section{From color to grayscale}
 Even though the task was to work with grayscale images, I chose to load in a color image and convert it to grayscale manually. This was done using equation \ref{grayscale} and can be seen on figure \ref{original_image} and \ref{new_grayscale_image}.
@@ -16,7 +16,7 @@ W_R = 0.299, \hspace{20 mm} W_G = 0.587, \hspace{20 mm} W_B = 0.114
 \label{standard_grayscale}
 \end{align}
 
-In OpenCV, the color channels are stored in the order of blue, green and red (and not red, green and blue as in many other places). Using a function named \textit{ConvertColorImageToBlackWhite}, the image is converted from a three-channel color image to a one-channel grayscale image. This is done by looping through each pixel and assign the grayscale value using equation \ref{grayscale}:
+In OpenCV, the color channels are stored in the order of blue, green and red (and not red, green and blue as in many other places). Using a function named \textit{ConvertColorImageToBlackWhite}, the image is converted from a three-channel color image to a one-channel grayscale image. This is done by looping through each pixel and assigning the grayscale value using equation \ref{grayscale}:
 
 \begin{lstlisting}
 Mat ConvertColorImageToBlackWhite(Mat colorImage)
@@ -77,7 +77,7 @@ To avoid unnecessary noise, a mean filter was applied. Using a kernel, it takes 
 
 A median filter could also have been used, but this is more appropriate for images with the so-called \textit{salt and pepper noise}.
 
-In this case a 5x5 kernel (radius: 2) has been used, and therefore the values are divided by 25 (see figure \ref{mean_filter_kernel}).
+In this case a 5x5 mean kernel (radius: 2) has been used, and therefore the values are divided by 25 (see figure \ref{mean_filter_kernel}).
 
 \begin{figure} [htbp]
 \includegraphics[width=0.3\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/mean_filter.jpg}
@@ -93,7 +93,7 @@ In this case a 5x5 kernel (radius: 2) has been used, and therefore the values ar
 \label{mean_blur}
 \end{figure}
 
-It should be noted that there is a problem associated with neighbourhood processing (which a mean filter is a part of) called \textit{the border problem}. Since the kernel cannot be applied outside of the image, the pixels from the outer borders will not be touched by the filter. The bigger the radius of the filter is, the bigger the untouched border will be. For simplistic sake this problem has not been addressed in the following code:
+It should be noted that there is a problem associated with neighbourhood processing (which the mean filter is a part of) called \textit{the border problem}. Since the kernel cannot be applied outside of the image, the pixels from the outer borders will not be touched by the filter. The bigger the radius of the filter is, the bigger the untouched border will be. \citep{ip_book} For simplistic sake this problem has not been addressed in the following code:
 
 \begin{lstlisting}
 Mat MeanFilter(Mat input)
@@ -135,7 +135,7 @@ Mat MeanFilter(Mat input)
 \end{lstlisting}
 
 \section{Thresholding}
-Before the actual edge detection is used, a threshold is applied. This result in a binary image where all pixels are either black (0) or white (255); there is nothing in between. The threshold value can vary from image to image. In this example ImageJ was chosen to automatically find the best threshold value for the image of the building, which turned out to be 133. The code  for doing the threshold is quite simple:
+Before the actual edge detection is used, a threshold is applied. This result in a binary image where all pixels are either black (0) or white (255); there is nothing in-between. The threshold value can vary from image to image. In this example ImageJ was chosen to automatically find the best threshold value for the image of the building, which turned out to be 133. The code  for doing the threshold is quite simple:
 
 \begin{lstlisting}
 // optimal value was found using ImageJ
@@ -144,7 +144,7 @@ Mat ThresholdBlackWhiteImage(Mat blackWhiteImage, int threshold)
 {
 	Mat image = blackWhiteImage.clone();
 
-	// Loop through all pixels and set them to either 255 (white) or 0 (black) using the threhold value
+	// Loop through all pixels and set them to either 255 (white) or 0 (black) using the threshold value
 	for (int y = 0; y < image.rows; y++)
 	{
 		for (int x = 0; x < image.cols; x++)
@@ -160,13 +160,13 @@ Mat ThresholdBlackWhiteImage(Mat blackWhiteImage, int threshold)
 }
 \end{lstlisting}
 
-The result can be seen in figure \ref{threshold}
+The result can be seen in figure \ref{threshold_v}
 
 \begin{figure} [htbp]
 \includegraphics[width=0.7\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/3_threshold}
 \centering
 \caption{When using a threshold the image becomes binary.}
-\label{threshold}
+\label{threshold_v}
 \end{figure}
 
 \section{The edge detection}
@@ -176,7 +176,7 @@ When this is done, the Sobel kernel is applied on the who image. This is impleme
 
 Finally, it is time to decide what edges to keep and what to throw away. This is done using a simple threshold check, like in the threshold function defined earlier.
 
-All this leave of with the following code. Note that I have chosen to omit all the direction checks to make it easier to read. In the appendix the code in all its length can be seen.
+All this leave of with the following code. Note that I have chosen to omit all the direction checks to make it easier to read. In the end of this report the code in all its length is shown.
 
 \begin{lstlisting}
 enum SobelDirection
@@ -197,6 +197,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 	// STEP 1: NOISE REDUCTION
 	if (useMeanFilterBeforeDoingEdgeDetecting)
 		edge = MeanFilter(edge);
+		// (if other filters were implemented, they could also be used here)
 
 	// Apply diagonal edge detecting RIGHT
 	if (direction == Diagonal_Right)
@@ -209,7 +210,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					continue;
 
 				// STEP TWO: EDGE ENHANCEMENT
-				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				// temp value of type int is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
 					+ (input.at<uchar>(y, x-1)) * -1
@@ -300,13 +301,13 @@ Mat AddTwoMatsTogether(Mat matA, Mat matB)
 }
 \end{lstlisting}
 
-Combining all four images into one gives this result. Compared with the original image (figure \ref{original_image}), the edges are quite clear.
+Combining all four images into one gives the result seen in figure \ref{final_image}. Compared with the original image (figure \ref{original_image}), the edges are quite clear.
 
 \begin{figure} [htbp]
 \includegraphics[width=1.0\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/MyOpenCV/OpenCV_test3/12_diagonal_plus_vertical_horizontal.jpg}
 \centering
 \caption{The final image where all Sobel directions are combined.}
-\label{threshold}
+\label{final_image}
 \end{figure}
 
 \section{Erosion outline}

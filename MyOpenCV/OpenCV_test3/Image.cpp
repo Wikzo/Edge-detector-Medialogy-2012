@@ -183,7 +183,7 @@ Mat ThresholdBlackWhiteImage(Mat blackWhiteImage, int threshold)
 {
 	Mat image = blackWhiteImage.clone();
 
-	// Loop through all pixels and set them to either 255 (white) or 0 (black) using the threhold value
+	// Loop through all pixels and set them to either 255 (white) or 0 (black) using the threshold value
 	for (int y = 0; y < image.rows; y++)
 	{
 		for (int x = 0; x < image.cols; x++)
@@ -205,6 +205,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 	// STEP 1: NOISE REDUCTION
 	if (useMeanFilterBeforeDoingEdgeDetecting)
 		edge = MeanFilter(edge);
+	// (if other filters were implemented, they could also be used here)
 
 	// Apply diagonal edge detecting RIGHT
 	if (direction == Diagonal_Right)
@@ -217,7 +218,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					continue;
 
 				// STEP TWO: EDGE ENHANCEMENT
-				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				// temp value of type int is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
 					+ (input.at<uchar>(y, x-1)) * -1
@@ -256,7 +257,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					continue;
 
 				// STEP TWO: EDGE ENHANCEMENT
-				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				// temp value of type int is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -2
 					+ (input.at<uchar>(y, x-1)) * -1
@@ -296,7 +297,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					continue;
 
 				// STEP TWO: EDGE ENHANCEMENT
-				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				// temp value of type int is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -1
 					+ (input.at<uchar>(y, x-1)) * -2
@@ -336,7 +337,7 @@ Mat SobelEdgeDetecting(Mat input, enum SobelDirection direction, bool useMeanFil
 					continue;
 
 				// STEP TWO: EDGE ENHANCEMENT
-				// temp value is used to not get overflow (value cannot be less than 0 or greater than 255)
+				// temp value of type int is used to not get overflow (value cannot be less than 0 or greater than 255)
 				int temp = (
 					(input.at<uchar>(y-1, x-1)) * -1
 					+ (input.at<uchar>(y, x-1)) * 0

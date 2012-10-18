@@ -59,7 +59,7 @@ The first step, \textbf{noise reduction}, can be done using a filter. Often an i
 The next step, \textbf{edge enhancement}, calculates the possible candidates for edges. This can be done in various ways. After this step it is time to decide what edges to keep using \textbf{edge localization}.
 
 \section{The Sobel filter}
-Multiple edge detectors exist. Among these are the Sobel and Canny filter. Sobel is the simplest of the two to implement and have therefore been chosen for this mini project. Its kernel weights row and column pixels in the center more than the rest. The Sobel filter is based on gray-level gradients, which is a measure of the steepness of what can be described as an image landscape (see figure \ref{surface_plot}). This is calculated for each individual pixel using the first-order derivative: \begin{align}f'(x,y) = g(x,y)\nonumber \end{align}
+Multiple edge detectors exist. Among these are the Sobel and Canny filter. Sobel is the simplest of the two to implement and have therefore been chosen for this mini project. Its kernel weights row and column pixels in the center more than the rest. The Sobel filter is based on gray-level gradients, which is a measure of the steepness of what can be described as an image landscape (see figure \ref{surface_plot}). This is calculated for each individual pixel using the first-order derivative: \begin{align}f'(x,y) = g(x,y) \label{first_order_derivative}\end{align}
 Since the function of the image is not continuous but discrete, an approximation is used for the first-order derivative, as shown in equations \ref{approx_x} and \ref{approx_y}.
 
 \begin{align}
@@ -77,7 +77,7 @@ Using correlation with the Sobel kernel can aid in finding either horizontal, ve
 \begin{figure} [htbp]
 \includegraphics[width=0.8\textwidth]{C:/Users/Wikzo/Desktop/"Procedural Programming"/Edge_detecting/Report/sobel_kernel.jpg}
 \centering
-\label{sobel_kernel}
 \caption{The different Sobel kernels focus on either horizontal, vertical or diagonal edges.}
+\label{sobel_kernel}
 \end{figure}
 
